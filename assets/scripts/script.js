@@ -2,6 +2,9 @@ const [start,end] = [8,18];
 
 const tbody = $("tbody");
 const currentTime = moment();
+const currentDayEl = $("#currentDay")
+const currentDayText = currentTime.format("dddd MMMM Do YYYY, h:mm:ss a")
+currentDayEl.text(currentDayText);
 const currentHour = Math.floor(currentTime.hour());
 let schedule = JSON.parse(localStorage.getItem("schedule"))||{};
 
