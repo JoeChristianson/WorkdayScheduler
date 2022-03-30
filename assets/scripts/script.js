@@ -1,10 +1,13 @@
-const [start,end] = [8,18];
+// Use 24 hour not 12 hour for values
+const [start,end] = [9,18];
 
 const tbody = $("tbody");
 const currentTime = moment();
 const currentDayEl = $("#currentDay")
+// Rendered in header
 const currentDayText = currentTime.format("dddd MMMM Do YYYY, h:mm:ss a")
 currentDayEl.text(currentDayText);
+// Need to round down to whole number for the for loop below
 const currentHour = Math.floor(currentTime.hour());
 let schedule = JSON.parse(localStorage.getItem("schedule"))||{};
 
@@ -23,7 +26,8 @@ for (i=start;i<end;i++){
     }
     const row = $("<tr>");
     const hour = $("<td>");
-    hour.addClass("col-2");
+    hour.addClass("col-2 hour");
+    // displays 12 at noon, converts to 12 hour measurement for display
     hour.text(i===12?12:i%12);
     hour.data("hour",i)
     const item = $("<td>");
@@ -32,6 +36,7 @@ for (i=start;i<end;i++){
     input.addClass(color)
     input.addClass("col-12")
     input.attr("data-hour",i)
+    // schedule is an object taken from local storage. Keys are integers, values are strings
     input.val(schedule[i])
     item.append(input)
     const saveBtn = $("<td>");
@@ -51,7 +56,6 @@ tbody.on("click",".custom-save-btn",(e)=>{
 })
 
 function save(hour){
-    console.log(hour)
     const el = $("textarea[data-hour='"+hour+"']")
     const text = el.val()
     schedule[hour]=text;
